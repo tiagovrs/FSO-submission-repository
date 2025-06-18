@@ -6,30 +6,36 @@ const Header = (props) => {
   )
 }
 
-// Go Horse Approach 
-const Content = (props) => {
+const Content = ({parts}) => {
+  console.log(parts) // Checks if the array exists
   return (
     <div>
-      <Part part={props.part1} exercise={props.exercise1} />
-      <Part part={props.part2} exercise={props.exercise2} />
-      <Part part={props.part3} exercise={props.exercise3} />
+      {parts.map((part) => (
+        <Part name = {part.name} exercise = {part.exercises}/> ))  }
     </div>
   )
 }
 
-const Part = (props) => {
+const Part = ({name, exercise}) => {
+
   return (
     <p>
-      {props.part} - {props.exercise}
+      {name} {exercise}
     </p>
   )
 }
 
-const Total = (props) => {
+const Total = ({parts}) => {
+
+  let total = 0
+
+  parts.forEach(part => {
+    total += part.exercises
+  })
 
   return (
     <div>
-      <p>Number of exercises {props.exercises}</p>
+      <p>Number of exercises {total}</p>
     </div>
   )
 
@@ -37,24 +43,26 @@ const Total = (props) => {
 
 const App = () => {
   const course = 'Half Stack application development'
-  const part1 = {
-    name: 'Fundamentals of React',
-    exercises: 10
-  }
-  const part2 = {
-    name: 'Using props to pass data',
-    exercises: 7
-  }
-  const part3 = {
-    name: 'State of a component',
-    exercises: 14
-  }
+  const parts = [
+    {
+      name: 'Fundamentals of React',
+      exercises: 10
+    },
+    {
+      name: 'Using props to pass data',
+      exercises: 7
+    },
+    {
+      name: 'State of a component',
+      exercises: 14
+    }
+  ]
 
   return (
     <div>
       <Header course={ course } />
-      <Content part1 = {part1.name} part2={part2.name} part3={part3.name} exercise1 = {part1.exercises} exercise2 = {part2.exercises} exercise3 = {part3.exercises} />
-      <Total exercises = { part1.exercises + part2.exercises + part3.exercises} />
+      <Content parts = {parts} />
+      <Total parts = {parts} />
     </div>
   )
 }
