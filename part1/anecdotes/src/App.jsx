@@ -6,6 +6,34 @@ function getRandomInt(max) {
   return Math.floor(Math.random() * max)
 }
 
+const MostVoted = ({anecdotes, votes}) => {
+
+  const maximum = Math.max(... votes)
+  const indexOfMaxValue = votes.indexOf(maximum)
+
+  return (
+    <div>
+      <h1>Anecdote with the most votes</h1>
+      {anecdotes[indexOfMaxValue]}
+    </div>
+      
+  )
+}
+
+const VotesCounterClock = ({anecdotes, votes, selected}) => {
+
+  const indexOfAnecdote = anecdotes.indexOf(anecdotes[selected])
+
+  return (
+
+    <>
+    <p> Has {votes[indexOfAnecdote]} votes </p>
+    </>
+
+  )
+
+}
+
 const App = () => {
   const anecdotes = [
     'If it hurts, do it more often.',
@@ -17,17 +45,34 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
-   
+  
   const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState (Array(anecdotes.length).fill(0))
 
   const handleNextAnecdote = () => {
     setSelected (getRandomInt(8))
   }
 
+  const handleVote = () => {
+    const copy = [... votes]
+    copy[selected] += 1
+    setVotes(copy)
+
+  }
+
   return (
     <div>
+
+      <h1> Anectode of the Day </h1>
       {anecdotes[selected]} <br />
-      <Button onClick={handleNextAnecdote} text="next anecdote"/>
+
+    <VotesCounterClock anecdotes={anecdotes} votes={votes} selected={selected} />
+
+      <Button onClick={handleVote} text='vote' />
+      <Button onClick={handleNextAnecdote} text="next anecdote" />
+      <MostVoted anecdotes={ anecdotes } votes = { votes }/>
+
+
     </div>
   )
 }
