@@ -26,12 +26,17 @@ const Statistics = ({ total, good, neutral, bad}) => {
       // <p>average  { average }</p> 
       // </>
       <>
-      <StatisticLine text="Good" value={good} />
-      <StatisticLine text="Neutral" value={neutral} />
-      <StatisticLine text="Bad" value={bad} />
-      <StatisticLine text="All" value={total} />
-      <StatisticLine text="Percentage" value={percentage} />
-      <StatisticLine text="Average" value={average}/>
+      <h1> statistics </h1>
+      <table>
+        <tbody>
+          <StatisticLine text="Good" value={good} />
+          <StatisticLine text="Neutral" value={neutral} />
+          <StatisticLine text="Bad" value={bad} />
+          <StatisticLine text="All" value={total} />
+          <StatisticLine text="Average" value={average}/>
+          <StatisticLine text="Percentage" value={percentage.toFixed(1)} unit = "%" />
+        </tbody>
+      </table>
       </>
 
     )
@@ -39,10 +44,16 @@ const Statistics = ({ total, good, neutral, bad}) => {
 
 }
 
-const StatisticLine =  ({text, value}) => {
+const StatisticLine =  ({text, value, unit=''}) => {
   return (
+  <>
+  <tr>
 
-  <p> {text}: {value}</p>
+  <th scope="row"> {text} </th>
+  <td>{value} {unit}</td>
+    
+  </tr>
+  </>
   )
 }
 
