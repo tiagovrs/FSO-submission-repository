@@ -1,4 +1,5 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
 
 const Filter = ( { nameSearch, handleSearchChange }) => {
   return (
@@ -81,16 +82,24 @@ const Numbers = ( {persons} ) => {
 }
 
 const App = () => {
-  const [persons, setPersons] = useState([
-    { name: 'Arto Hellas', number: '040-123456', id: 1 },
-    { name: 'Ada Lovelace', number: '39-44-5323523', id: 2 },
-    { name: 'Dan Abramov', number: '12-43-234345', id: 3 },
-    { name: 'Mary Poppendieck', number: '39-23-6423122', id: 4 }
-  ]) 
+  const [persons, setPersons] = useState([]) 
 
   const [newName, setNewName] = useState('new name')
   const [newNumber, setNewNumber] = useState('new number')
   const [nameSearch, setNameSearch] = useState("")
+
+  //Use axios to get the Persons data
+
+  const hook = () => {
+
+    axios
+    .get('http://localhost:3001/persons') // Access the database
+    .then(response => {
+      setPersons(response.data) // Update the persons array to the get results "response"
+    })
+  }
+
+  useEffect(hook, []) // Call the hook with useEffect
 
   const addPerson = (event) => {
 
